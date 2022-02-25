@@ -48,6 +48,10 @@ class rfidReader():
         print(f"{date} --> {mat}")
 
 
+rfid = rfidReader()
+
+rfid.stringCreator()
+
 #           .--.          
 # ::\`--._,'.::.`._.--'/::
 # ::::.  ` __::__ '  .::::
