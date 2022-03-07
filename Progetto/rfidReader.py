@@ -1,57 +1,30 @@
-# https://pimylifeup.com/raspberry-pi-rfid-rc522/
-
-import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
-
-import datetime
-import logging
-
-LOGGING_FILE = f"log/{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}-log.log"
-
-logging.basicConfig(filename=LOGGING_FILE, encoding='utf-8', level=logging.DEBUG)
-
-class rfidReader():
-    def __init__(self):
-        reader = SimpleMFRC522()
-
-    def read(self):
-        try:
-            mat = self.reader.read()
-            return mat
-            logging.debug("Begin reading...")
-        except:
-            logging.critical("Failed reading")
-        finally:
-            GPIO.cleanup()
-            logging.debug("Finished reading...")
-
-    def write(self):
-        try:
-            text = input('Inserisci i dati:')
-            print("Posiziona il tag")
-            self.reader.write(text)
-            print("Scritto")
-            logging.debug("Begin writing...")
-        except:
-            logging.critical("Failed writing")
-        finally:
-            GPIO.cleanup()
-            logging.debug("Finished writing...")
-
-    def stringCreator(self):
-        logging.debug("String creation...")
-
-        mat = self.read()
-        date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-        string = f"{date},{mat}"
-        print(f"{date} --> {mat}")
+import RPi.GPIO as GPIO #Importe la bibliothèque pour contrôler les GPIOs
+from pirc522 import RFID
+import time
+from gpiozero import Buzzer
 
 
-rfid = rfidReader()
+GPIO.setmode(GPIO.BOARD) #Définit le mode de numérotation (Board)
+GPIO.setwarnings(False) #On désactive les messages d'alerte
 
-rfid.stringCreator()
+rc522 = RFID() #On instancie la lib
+buzzer = Buzzer(26)
+print("In attesa: ")
 
+#On va faire une boucle infinie pour lire en boucle
+while True :
+    rc522.wait_for_tag() #On attnd qu'une puce RFID passe à portée
+    (error, tag_type) = rc522.request() #Quand une puce a été lue, on récupère ses infos
+
+    if not error : #Si on a pas d'erreur
+        (error, uid) = rc522.anticoll() #On nettoie les possibles collisions, ça arrive si plusieurs cartes passent en même temps
+
+        if not error : #Si on a réussi à nettoyer
+            print("id: {}".format(uid))
+
+            buzzer.beep()
+
+            time.sleep(1) #On attend 1 seconde pour ne pas lire le tag des centaines de fois en quelques milli-secondes
 #           .--.          
 # ::\`--._,'.::.`._.--'/::
 # ::::.  ` __::__ '  .::::
