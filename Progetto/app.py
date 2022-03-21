@@ -32,12 +32,12 @@ class raspberry():
         self.api = "https://testgpoi2022.netsons.org/pres_auto/config/PHP/api_controllo_timbr.php"
         self.password = "Rasp_rfid"
         self.Rled = 6
+        GPIO.setmode(GPIO.BCM) 
         GPIO.setup(self.Rled,GPIO.OUT)
         self.Gled = 5
         GPIO.setup(self.Gled,GPIO.OUT)
         self.buzzer = Buzzer(26)
         self.rc522 = RFID()
-        GPIO.setmode(GPIO.BCM) 
 
     def reader(self):
         global offsetTagDict
