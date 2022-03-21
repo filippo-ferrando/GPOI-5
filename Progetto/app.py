@@ -49,6 +49,7 @@ class raspberry():
 
             if not error :
                 print('Uid del badge : {}'.format(uid))
+                uid = str(uid)
                 time.sleep(0.5)
 
         if uid in offsetTagDict.keys():
