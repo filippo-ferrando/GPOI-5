@@ -35,6 +35,7 @@ class raspberry():
         self.deleter.start()
 
     def reader(self):
+        global offsetTagDict
         uid = lettore.readT()
         if uid in offsetTagDict.keys():
             uid = 403

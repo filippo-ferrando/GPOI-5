@@ -11,11 +11,11 @@ class lettore():
 
     def readT(self):
         print('In attesa del badge (per quittare, Ctrl + c): ')
-        rc522.wait_for_tag()
-        (error, tag_type) = rc522.request()
+        self.rc522.wait_for_tag()
+        (error, tag_type) = self.rc522.request()
 
         if not error : 
-            (error, uid) = rc522.anticoll()
+            (error, uid) = self.rc522.anticoll()
 
             if not error :
                 print('Uid del badge : {}'.format(uid))
