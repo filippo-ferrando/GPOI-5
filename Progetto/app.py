@@ -16,7 +16,7 @@ class tagController(thr.Thread):
 
     def run(self):
         global offsetTagList
-        while self.runnning:
+        while self.running:
             for element in offsetTagDict.values():
                 if (datetime.now().strftime('%H:%M:%S') - element) >= 30:
                     wKey = list(offsetTagDict.keys())[list(offsetTagDict.values()).index(element)]
@@ -30,9 +30,6 @@ class raspberry():
         self.Rled = 3
         self.Gled = 2
         self.buzzer = Buzzer(26)
-
-        self.deleter = tagController()
-        self.deleter.start()
 
     def reader(self):
         global offsetTagDict
@@ -76,6 +73,9 @@ class raspberry():
         
         
 rasp = raspberry()
+
+controlList = tagController()
+controlList.start()
 
 while True:
     uid = rasp.reader()
