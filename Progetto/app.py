@@ -67,7 +67,7 @@ class raspberry():
 
     def bip(self, resp):
         if resp == "si":
-            GPIO.output(self.Gled, HIGH)
+            GPIO.output(self.Gled, GPIO.HIGH)
             self.buzzer.on()
             time.sleep(0.3)
             self.buzzer.off()
@@ -75,19 +75,19 @@ class raspberry():
             self.buzzer.on()
             time.sleep(0.3)
             self.buzzer.off()
-            GPIO.output(self.Gled, LOW)
+            GPIO.output(self.Gled, GPIO.LOW)
         elif resp == "no":
-            GPIO.output(self.Rled, HIGH)
+            GPIO.output(self.Rled, GPIO.HIGH)
             self.buzzer.on()
             time.sleep(1)
             self.buzzer.off()
-            GPIO.output(self.Rled, LOW)
+            GPIO.output(self.Rled, GPIO.LOW)
 
 
     def repeated_tag(self):
-        GPIO.output(self.Rled, HIGH)
+        GPIO.output(self.Rled, GPIO.HIGH)
         time.sleep(1)
-        GPIO.output(self.Rled, LOW)
+        GPIO.output(self.Rled, GPIO.LOW)
         
         
 rasp = raspberry()
