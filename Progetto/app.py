@@ -10,7 +10,7 @@ from gpiozero import Buzzer
 global offsetTagDict
 offsetTagDict = {}
 
-GPIO.setmode(GPIO.BOARD)
+#GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 class tagController(thr.Thread):
