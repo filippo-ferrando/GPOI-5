@@ -37,6 +37,7 @@ class raspberry():
         GPIO.setup(self.Gled,GPIO.OUT)
         self.buzzer = Buzzer(26)
         self.rc522 = RFID()
+        GPIO.setmode(GPIO.BCM) 
 
     def reader(self):
         global offsetTagDict
