@@ -32,7 +32,9 @@ class raspberry():
         self.api = "https://testgpoi2022.netsons.org/pres_auto/config/PHP/api_controllo_timbr.php"
         self.password = "Rasp_rfid"
         self.Rled = 3
+        GPIO.setup(3,GPIO.OUT)
         self.Gled = 2
+        GPIO.setup(2,GPIO.OUT)
         self.buzzer = Buzzer(26)
         self.rc522 = RFID()
 
