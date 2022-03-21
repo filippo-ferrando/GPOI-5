@@ -27,8 +27,8 @@ class raspberry():
     def __init__(self):
         self.api = "https://testgpoi2022.netsons.org/pres_auto/config/PHP/api_controllo_timbr.php"
         self.password = "Rasp_rfid"
-        self.Rled = 18
-        self.Gled = 22
+        self.Rled = 3
+        self.Gled = 2
         self.buzzer = Buzzer(26)
 
         self.deleter = tagController()
@@ -74,4 +74,9 @@ class raspberry():
         GPIO.output(self.Rled, LOW)
         
         
-raspberry.bip(raspberry.send(raspberry.reader()))
+rasp = raspberry()
+
+while True:
+    uid = rasp.reader()
+    resp = rasp.send(uid)
+    rasp.bip(resp)
