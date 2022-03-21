@@ -23,14 +23,16 @@ class tagController(thr.Thread):
                     offsetTagDict.pop(wKey)
 
 
-
-class raspberry(self):
+class raspberry():
     def __init__(self):
         self.api = "https://testgpoi2022.netsons.org/pres_auto/config/PHP/api_controllo_timbr.php"
         self.password = "Rasp_rfid"
         self.Rled = 18
         self.Gled = 22
         self.buzzer = Buzzer(26)
+
+        self.deleter = tagController()
+        self.deleter.start()
 
     def reader(self):
         uid = lettore.readT()
@@ -72,3 +74,4 @@ class raspberry(self):
         GPIO.output(self.Rled, LOW)
         
         
+raspberry.bip(raspberry.send(raspberry.reader()))
