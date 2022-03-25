@@ -2,6 +2,8 @@ import requests
 import threading as thr
 from datetime import datetime
 import time
+import urllib.request
+
 
 from pirc522 import RFID
 import RPi.GPIO as GPIO
@@ -12,6 +14,15 @@ offsetTagDict = {}
 
 #GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
+
+
+def connect(host='http://google.com'):
+    try:
+        urllib.request.urlopen(host) #Python 3.x
+        return True
+    except:
+        return False
+
 
 class tagController(thr.Thread):
     def __init__(self):
