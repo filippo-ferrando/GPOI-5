@@ -9,8 +9,8 @@ from pirc522 import RFID
 import RPi.GPIO as GPIO
 from gpiozero import Buzzer
 
-#global offsetTagDict
-#offsetTagDict = {}
+global offsetTagDict
+offsetTagDict = {}
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
