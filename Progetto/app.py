@@ -42,9 +42,9 @@ class raspberry():
     def __init__(self):
         self.api = "https://testgpoi2022.netsons.org/pres_auto/config/codice/api_controllo_timbr.php"
         self.password = "Rasp_rfid"
-        self.Rled = 12
+        self.Rled = 11
         GPIO.setup(self.Rled,GPIO.OUT)
-        self.Gled = 7
+        self.Gled = 13
         GPIO.setup(self.Gled,GPIO.OUT)
         self.buzzer = Buzzer(26)
         self.rc522 = RFID()
