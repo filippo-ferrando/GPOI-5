@@ -43,6 +43,7 @@ class raspberry():
         self.api = "https://testgpoi2022.netsons.org/pres_auto/config/codice/api_controllo_timbr.php"
         self.password = "Rasp_rfid"
         self.Rled = 12
+        GPIO.cleanup()
         GPIO.setmode(GPIO.BCM) 
         GPIO.setup(self.Rled,GPIO.OUT)
         self.Gled = 7
@@ -55,6 +56,7 @@ class raspberry():
 
     def reader(self):
         global offsetTagDict
+        GPIO.cleanup()
         GPIO.setmode(GPIO.BOARD)
 
         print('In attesa del badge (per quittare, Ctrl + c): ')
@@ -85,26 +87,32 @@ class raspberry():
 
     def bip(self, resp):
         if resp == "si":
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BCM)
             GPIO.output(self.Gled, GPIO.HIGH)
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BOARD)
             self.buzzer.on()
             time.sleep(0.3)
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BOARD)
             self.buzzer.off()
             time.sleep(0.3)
             self.buzzer.on()
             time.sleep(0.3)
             self.buzzer.off()
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BCM)
             GPIO.output(self.Gled, GPIO.LOW)
         elif resp == "no":
             GPIO.setmode(GPIO.BCM)
             GPIO.output(self.Rled, GPIO.HIGH)
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BOARD)
             self.buzzer.on()
             time.sleep(1)
             self.buzzer.off()
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BCM)
             GPIO.output(self.Rled, GPIO.LOW)
         elif resp == "password":
@@ -112,6 +120,7 @@ class raspberry():
 
 
     def repeated_tag(self):
+        GPIO.cleanup()
         GPIO.setmode(GPIO.BCM)
         GPIO.output(self.Rled, GPIO.HIGH)
         time.sleep(1)
