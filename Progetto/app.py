@@ -33,7 +33,7 @@ class tagController(thr.Thread):
         global offsetTagList
         while self.running:
             for element in offsetTagDict.values():
-                if (time.time() - element) >= 30:
+                if int((time.time() - element)) >= 30:
                     wKey = list(offsetTagDict.keys())[list(offsetTagDict.values()).index(element)]
                     offsetTagDict.pop(wKey)
 
@@ -69,7 +69,7 @@ class raspberry():
                 print(f'Uid del badge : {uid}')
                 time.sleep(0.5)
 
-        if uid in offsetTagDict.keys():
+        if uid in offsetTagDict:
             uid = 403
         else:
             offsetTagDict[uid] = time.time()
@@ -81,7 +81,7 @@ class raspberry():
         if uid == 403:
             self.repeated_tag()
         else:
-            http = requests.post(self.api,data={'codMatr' : uid, 'password' : self.password, 'modalita' : "modalita"})
+            http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
             return http.text
         #http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
         print(http.text)
