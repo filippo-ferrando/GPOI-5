@@ -86,7 +86,7 @@ class raspberry():
             http = requests.post(self.api,data={'codMatr' : uid, 'password' : self.password, 'modalita' : "modalita"})
             return http.text
         '''
-        http = requests.post(self.api,data={'codMatr' : uid, 'password' : self.password, 'modalita' : "modalita"})
+        http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
         return http.text
 
     def bip(self, resp):
