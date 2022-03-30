@@ -9,8 +9,8 @@ from pirc522 import RFID
 import RPi.GPIO as GPIO
 from gpiozero import Buzzer
 
-global offsetTagDict
-offsetTagDict = {}
+#global offsetTagDict
+#offsetTagDict = {}
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -23,7 +23,7 @@ def connect(host='http://google.com'):
     except:
         return False
 
-
+'''
 class tagController(thr.Thread):
     def __init__(self):
         thr.Thread.__init__(self)
@@ -36,6 +36,7 @@ class tagController(thr.Thread):
                 if int((time.time() - element)) >= 30:
                     wKey = list(offsetTagDict.keys())[list(offsetTagDict.values()).index(element)]
                     offsetTagDict.pop(wKey)
+'''
 
 class raspberry():
     def __init__(self):
@@ -54,7 +55,7 @@ class raspberry():
             print("connected")
 
     def reader(self):
-        global offsetTagDict
+        #global offsetTagDict
 
         print('In attesa del badge (per quittare, Ctrl + c): ')
 
@@ -68,24 +69,27 @@ class raspberry():
                 uid = "".join(str(l) for l in uid)
                 print(f'Uid del badge : {uid}')
                 time.sleep(0.5)
-
+        '''
         if uid in offsetTagDict:
             uid = 403
         else:
             offsetTagDict[uid] = time.time()
             return uid
+        '''
 
-        #return uid
+        return uid
 
     def send(self, uid):
+        '''
         if uid == 403:
             self.repeated_tag()
         else:
             http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
             return http.text
-        #http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
+        '''
+        http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
         print(http.text)
-        #return http.text
+        return http.text
 
 
     def bip(self, resp):
@@ -116,8 +120,8 @@ class raspberry():
         
 rasp = raspberry()
 
-controlList = tagController()
-controlList.start()
+#controlList = tagController()
+#controlList.start()
 
 while True:
     uid = rasp.reader()
