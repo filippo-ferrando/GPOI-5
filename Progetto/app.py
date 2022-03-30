@@ -66,7 +66,7 @@ class raspberry():
             (error, uid) = self.rc522.anticoll()
 
             if not error :
-                uid = "".join(l for l in uid)
+                uid = "".join(str(l) for l in uid)
                 print(f'Uid del badge : {uid}')
                 time.sleep(0.5)
         '''
