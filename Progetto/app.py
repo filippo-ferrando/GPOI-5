@@ -66,8 +66,8 @@ class raspberry():
             (error, uid) = self.rc522.anticoll()
 
             if not error :
-                print('Uid del badge : {}'.format(uid))
-                uid = str(uid)
+                uid = "".join(l for l in uid)
+                print(f'Uid del badge : {uid}')
                 time.sleep(0.5)
         '''
         if uid in offsetTagDict.keys():
@@ -109,11 +109,12 @@ class raspberry():
         elif resp == "password":
             print("PASSWORD SBAGLIATA")
 
-
+    '''
     def repeated_tag(self):
         GPIO.output(self.Rled, GPIO.HIGH)
         time.sleep(1)
         GPIO.output(self.Rled, GPIO.LOW)
+    '''
         
         
 rasp = raspberry()
