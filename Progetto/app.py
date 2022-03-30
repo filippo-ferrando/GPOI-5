@@ -33,7 +33,7 @@ class tagController(thr.Thread):
         global offsetTagList
         while self.running:
             for element in offsetTagDict.values():
-                if (time.time() - element) >= 30:
+                if (time.time() - float(element)) >= 30:
                     wKey = list(offsetTagDict.keys())[list(offsetTagDict.values()).index(element)]
                     offsetTagDict.pop(wKey)
 
