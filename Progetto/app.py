@@ -51,6 +51,8 @@ class raspberry():
         if not connect():
             print("Not connected to internet, exiting...")
             os.sys.exit()
+        else:
+            print("connected")
 
     def reader(self):
         #global offsetTagDict
