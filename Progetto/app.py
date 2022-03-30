@@ -87,7 +87,9 @@ class raspberry():
             return http.text
         '''
         http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
+        print(http.text)
         return http.text
+
 
     def bip(self, resp):
         if resp == "si":
