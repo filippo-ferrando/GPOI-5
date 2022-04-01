@@ -52,13 +52,6 @@ class raspberry():
         GPIO.setup(self.Gled,GPIO.OUT)
         self.buzzer = Buzzer(26)
         self.rc522 = RFID()
-        if not connect():
-            print("Not connected to internet, exiting...")
-            logging.critical(f"{datetime.now()} - Failed to connect to internet")
-            os.sys.exit()
-        else:
-            print("connected")
-            logging.debug(f"{datetime.now()} - Connected to internet")
 
     def reader(self):
         #global offsetTagDict
@@ -132,6 +125,14 @@ rasp = raspberry()
 
 #controlList = tagController()
 #controlList.start()
+time.sleep(0.5)
+if not connect():
+    print("Not connected to internet, exiting...")
+    logging.critical(f"{datetime.now()} - Failed to connect to internet")
+    os.sys.exit()
+else:
+    print("connected")
+    logging.debug(f"{datetime.now()} - Connected to internet")
 
 while True:
     time.sleep(3)
