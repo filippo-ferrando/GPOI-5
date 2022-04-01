@@ -4,6 +4,7 @@ from datetime import datetime
 import time
 import urllib.request
 import os
+import logging
 
 from pirc522 import RFID
 import RPi.GPIO as GPIO
