@@ -134,7 +134,7 @@ rasp = raspberry()
 #controlList.start()
 
 while True:
+    time.sleep(3)
     uid = rasp.reader()
     resp = rasp.send(uid)
     rasp.bip(resp)
-    time.sleep(5)
