@@ -1,4 +1,4 @@
 spidev
-mfrc522
+pirc522
 logging
 datetime

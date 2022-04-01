@@ -15,6 +15,9 @@ from gpiozero import Buzzer
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
+# LOGGING PLATFORM
+LOGGING_FILE = "./log/log.log"
+logging.basicConfig(filename=LOGGING_FILE, encoding="utf-8", level=logging.DEBUG)
 
 def connect(host='http://google.com'):
     try:
@@ -50,14 +53,16 @@ class raspberry():
         self.rc522 = RFID()
         if not connect():
             print("Not connected to internet, exiting...")
+            logging.critical(f"{datetime.now()} - Failed to connect to internet")
             os.sys.exit()
         else:
             print("connected")
+            logging.debug(f"{datetime.now()} - Connected to internet")
 
     def reader(self):
         #global offsetTagDict
 
-        print('In attesa del badge (per quittare, Ctrl + c): ')
+        print('Waiting for the badge: ')
 
         self.rc522.wait_for_tag()
         (error, tag_type) = self.rc522.request()
@@ -67,7 +72,7 @@ class raspberry():
 
             if not error :
                 uid = "".join(str(l) for l in uid)
-                print(f'Uid del badge : {uid}')
+                print(f'badge : {uid}')
                 time.sleep(0.5)
         '''
         if uid in offsetTagDict:
@@ -88,12 +93,13 @@ class raspberry():
             return http.text
         '''
         http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
-        print(http.text)
+        logging.debug(f"{datetime.now()} - UID {uid} Sended")
         return http.text
 
 
     def bip(self, resp):
         if resp == "si":
+            logging.debug(f"{datetime.now()} - Positive Response")
             GPIO.output(self.Gled, GPIO.HIGH)
             self.buzzer.on()
             time.sleep(0.3)
@@ -104,19 +110,22 @@ class raspberry():
             self.buzzer.off()
             GPIO.output(self.Gled, GPIO.LOW)
         elif resp == "no":
+            logging.debug(f"{datetime.now()} - Negative Response")
             GPIO.output(self.Rled, GPIO.HIGH)
             self.buzzer.on()
             time.sleep(1)
             self.buzzer.off()
             GPIO.output(self.Rled, GPIO.LOW)
         elif resp == "password":
+            logging.debug(f"{datetime.now()} - 500 : Internal server error ")
             print("PASSWORD SBAGLIATA")
 
+    '''
     def repeated_tag(self):
         GPIO.output(self.Rled, GPIO.HIGH)
         time.sleep(1)
         GPIO.output(self.Rled, GPIO.LOW)
-        
+    '''    
         
 rasp = raspberry()
 
@@ -127,4 +136,4 @@ while True:
     uid = rasp.reader()
     resp = rasp.send(uid)
     rasp.bip(resp)
-    time.sleep(2)
+    time.sleep(5)
