@@ -68,6 +68,8 @@ class raspberry():
                 uid = "".join(str(l) for l in uid)
                 print(f'badge : {uid}')
                 time.sleep(0.5)
+
+                return uid
         '''
         if uid in offsetTagDict:
             uid = 403
@@ -76,7 +78,7 @@ class raspberry():
             return uid
         '''
 
-        return uid
+        
 
     def send(self, uid):
         '''
@@ -129,7 +131,7 @@ time.sleep(0.5)
 if not connect():
     print("Not connected to internet, exiting...")
     logging.critical(f"{datetime.now()} - Failed to connect to internet")
-    os.sys.exit()
+    #os.sys.exit()
 else:
     print("connected")
     logging.debug(f"{datetime.now()} - Connected to internet")
