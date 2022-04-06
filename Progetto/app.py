@@ -20,6 +20,11 @@ GPIO.setwarnings(False)
 LOGGING_FILE = "./log/log.log"
 logging.basicConfig(filename=LOGGING_FILE, encoding="utf-8", level=logging.DEBUG)
 
+pid = os.getpid()
+f = open("pid.txt", "w")
+f.write(f"{pid}")
+f.close()
+
 def connect(host='http://google.com'):
     try:
         urllib.request.urlopen(host)
