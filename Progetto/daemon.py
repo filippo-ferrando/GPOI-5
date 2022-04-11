@@ -4,8 +4,9 @@ import time
 
 logging.basicConfig(filename="/home/pi/GPOI-5/Progetto/log/pid-log.log", encoding="utf-8", level=logging.DEBUG)
 
+
 while True:
-    time.sleep(300)
+    
     try:
         with open("/home/pi/GPOI-5/Progetto/pid.txt") as f:
             lines = f.readlines()
@@ -21,6 +22,8 @@ while True:
                     pass
     except FileNotFoundError:
         print("File not found")
+
+    time.sleep(300)
 
 
 
