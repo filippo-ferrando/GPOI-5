@@ -21,7 +21,7 @@ LOGGING_FILE = "/home/pi/GPOI-5/Progetto/log/log.log"
 logging.basicConfig(filename=LOGGING_FILE, encoding="utf-8", level=logging.DEBUG)
 
 pid = os.getpid()
-f = open("pid.txt", "w")
+f = open("/home/pi/GPOI-5/Progetto/pid.txt", "w")
 f.write(f"{pid}")
 f.close()
 
@@ -148,14 +148,6 @@ rasp = raspberry()
 
 #controlList = tagController()
 #controlList.start()
-time.sleep(0.5)
-if not connect():
-    print("Not connected to internet, exiting...")
-    logging.critical(f"{datetime.now()} - Failed to connect to internet")
-    #os.sys.exit()
-else:
-    print("connected")
-    logging.debug(f"{datetime.now()} - Connected to internet")
 
 while True:
     time.sleep(3)
