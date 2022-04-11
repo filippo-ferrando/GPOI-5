@@ -58,23 +58,33 @@ class raspberry():
         self.buzzer = Buzzer(26)
         self.rc522 = RFID()
 
+        if connect():
+            logging.debug(f"Connected to internet")
+        else:
+            logging.critical(f"Not connected")
+            os._exit(0)
+
     def reader(self):
         #global offsetTagDict
 
-        print('Waiting for the badge: ')
+        try:
 
-        self.rc522.wait_for_tag()
-        (error, tag_type) = self.rc522.request()
+            print('Waiting for the badge: ')
 
-        if not error : 
-            (error, uid) = self.rc522.anticoll()
+            self.rc522.wait_for_tag()
+            (error, tag_type) = self.rc522.request()
 
-            if not error :
-                uid = "".join(str(l) for l in uid)
-                print(f'badge : {uid}')
-                time.sleep(0.5)
+            if not error : 
+                (error, uid) = self.rc522.anticoll()
 
-                return uid
+                if not error :
+                    uid = "".join(str(l) for l in uid)
+                    print(f'badge : {uid}')
+                    time.sleep(0.5)
+
+                    return uid
+        except KeyboardInterrupt:
+            print("chiusura")
         '''
         if uid in offsetTagDict:
             uid = 403
@@ -93,6 +103,12 @@ class raspberry():
             http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
             return http.text
         '''
+        if connect():
+            logging.debug(f"Connected to internet")
+        else:
+            logging.critical(f"Not connected - Cannot send info")
+            os._exit(0)
+
         http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
         logging.debug(f"{datetime.now()} - UID {uid} Sended")
         return http.text

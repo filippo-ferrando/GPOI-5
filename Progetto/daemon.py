@@ -2,12 +2,14 @@ import os
 import psutil
 import time
 
+logging.basicConfig(filename="./log/pid-log.log", encoding="utf-8", level=logging.DEBUG)
+
 while True:
     time.sleep(300)
     try:
         with open("./pid.txt") as f:
             lines = f.readlines()
-            print(lines[0]) #PID from the main process
+            logging.debug(f"PID = {lines[0]}") #PID from the main process
             for proc in psutil.process_iter():
                 try:
                     if lines[0] == proc.pid:
