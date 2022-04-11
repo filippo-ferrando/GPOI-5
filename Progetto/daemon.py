@@ -2,12 +2,12 @@ import os
 import psutil
 import time
 
-logging.basicConfig(filename="./log/pid-log.log", encoding="utf-8", level=logging.DEBUG)
+logging.basicConfig(filename="/home/pi/GPOI-5/Progetto/log/pid-log.log", encoding="utf-8", level=logging.DEBUG)
 
 while True:
     time.sleep(300)
     try:
-        with open("./pid.txt") as f:
+        with open("/home/pi/GPOI-5/Progetto/pid.txt") as f:
             lines = f.readlines()
             logging.debug(f"PID = {lines[0]}") #PID from the main process
             for proc in psutil.process_iter():

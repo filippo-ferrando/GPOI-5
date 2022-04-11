@@ -17,7 +17,7 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 # LOGGING PLATFORM
-LOGGING_FILE = "./log/log.log"
+LOGGING_FILE = "/home/pi/GPOI-5/Progetto/log/log.log"
 logging.basicConfig(filename=LOGGING_FILE, encoding="utf-8", level=logging.DEBUG)
 
 pid = os.getpid()
