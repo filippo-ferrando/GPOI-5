@@ -17,11 +17,11 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 # LOGGING PLATFORM
-LOGGING_FILE = "/home/pi/GPOI-5/Progetto/log/log.log"
+LOGGING_FILE = "/home/pi/log/log.log"
 logging.basicConfig(filename=LOGGING_FILE, encoding="utf-8", level=logging.DEBUG)
 
 pid = os.getpid()
-f = open("/home/pi/GPOI-5/Progetto/pid.txt", "w")
+f = open("/home/pi/pid.txt", "w")
 f.write(f"{pid}")
 f.close()
 
@@ -66,23 +66,22 @@ class raspberry():
 
     def reader(self):
         #global offsetTagDict
-
         try:
-
-            print('Waiting for the badge: ')
+            print("ready: ")
+            #print('Waiting for the badge: ')
 
             self.rc522.wait_for_tag()
             (error, tag_type) = self.rc522.request()
 
-            if not error : 
-                (error, uid) = self.rc522.anticoll()
+            #if not error : 
+            (error, uid) = self.rc522.anticoll()
 
-                if not error :
-                    uid = "".join(str(l) for l in uid)
-                    print(f'badge : {uid}')
-                    time.sleep(0.5)
+                #if not error :
+            uid = "".join(str(l) for l in uid)
+            print(f'badge : {uid}')
+            time.sleep(0.5)
 
-                    return uid
+            return uid
         except KeyboardInterrupt:
             print("chiusura")
         '''
@@ -110,6 +109,7 @@ class raspberry():
             os._exit(0)
 
         http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
+        print(http.text)
         logging.debug(f"{datetime.now()} - UID {uid} Sended")
         return http.text
 
