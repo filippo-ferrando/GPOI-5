@@ -20,9 +20,8 @@ GPIO.setwarnings(False)
 LOGGING_FILE = "/home/pi/log/log.log"
 logging.basicConfig(filename=LOGGING_FILE, encoding="utf-8", level=logging.DEBUG)
 
-pid = os.getpid()
 f = open("/home/pi/pid.txt", "w")
-f.write(f"{pid}")
+f.write(f"{os.getpid()}")
 f.close()
 
 def connect(host='http://google.com'):
@@ -61,7 +60,7 @@ class raspberry():
         if connect():
             logging.debug(f"Connected to internet")
         else:
-            logging.critical(f"Not connected")
+            logging.debug(f"{datetime.now()} - Killing process")
             os._exit(0)
 
     def reader(self):
@@ -76,14 +75,16 @@ class raspberry():
             #if not error : 
             (error, uid) = self.rc522.anticoll()
 
-                #if not error :
+            #if not error :
             uid = "".join(str(l) for l in uid)
             print(f'badge : {uid}')
+            logging.debug(f"{datetime.now()} - Successfull read")
             time.sleep(0.5)
 
             return uid
-        except KeyboardInterrupt:
+        except:
             print("chiusura")
+            logging.critical(f"{datetime.now()} - killing process")
         '''
         if uid in offsetTagDict:
             uid = 403
@@ -103,9 +104,9 @@ class raspberry():
             return http.text
         '''
         if connect():
-            logging.debug(f"Connected to internet")
+            logging.debug(f"{datetime.now()} - Connected to internet")
         else:
-            logging.critical(f"Not connected - Cannot send info")
+            logging.critical(f"{datetime.now()} - Not connected : Cannot send info")
             os._exit(0)
 
         http = requests.post(self.api,data={'uid' : uid, 'password' : self.password, 'modalita' : "modalita"})
