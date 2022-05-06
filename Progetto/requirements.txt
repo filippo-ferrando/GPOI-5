@@ -1,4 +1,0 @@
-spidev
-pirc522
-logging
-datetime
